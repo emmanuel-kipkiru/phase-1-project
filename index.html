@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link
+     rel="stylesheet"
+     href="https://inshorts.deta.dev/news?category=all" />
+     <link rel="stylesheet" href="style.css" />
+     <title>News</title>
+
+</head>
+<body>
+  
+    <p>
+        Type any kind of news ; football, covid 19, oppo and many more and lasty click the 'submit' button to view the results
+    </p>
+    <form class="search" action="">
+        <label for="">News</label></br>
+
+        <input class="input" type="text"/></br>
+        <input type="submit" />
+
+    </form>
+    <div class="container">
+        <ul class="news-list"></ul>
+
+    </div>
+
+
+    <script>
+        const searchFrom = document.querySelector('.search');
+        const input = document.querySelector('.input');
+        const newsList = document.querySelector('.news-list');
+
+        console.log(newsList)
+
+        searchFrom.addEventListener('submit', retrieve)
+
+        function retrieve(e){
+            if (input.value == ''){
+                alert('input field is empty!')
+                return
+            }
+
+
+
+
+            newsList.innerHTML = '' 
+           e.preventDefault()
+           const apiKey = 'da5039c701cf4e6a82175114fa1d5f4e'
+            
+           let topic = input.value;
+           let url = `https://newsapi.org/v2/everything?q=${topic}&apiKey=${apiKey}`
+
+           fetch(url).then((res)=>{
+               return res.json()
+           }).then((data)=>{
+               console.log(data)
+
+               data.articles.forEach(article =>{
+                   let li = document.createElement('li');
+                   let a = document.createElement('a');
+                   a.setAttribute('href', article.url );
+                   a.setAttribute('target', '_blank')
+                   a.textContent= article.title;
+                   li.appendChild(a);
+                   newsList.appendChild(li);
+               })
+           })
+
+           .catch((error)=>{
+               console.log(error)
+           })
+           console.log(topic)
+        }
+    </script>
+
+    
+    <div class="container">
+        <button> Click Me </button>
+        <div id="box"></div>
+    </div>
+
+    <div style="text-align: center;">
+        <button>change</button>
+        <h1>Status</h1>
+        <select>
+            <option value="manuel">manuel</option>
+            <option value="manuel">dancan</option>
+            <option value="manuel">sam</option>
+            <option value="manuel">kipkirui</option>
+        </select>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
